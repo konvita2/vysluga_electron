@@ -32,3 +32,8 @@ $ npm run build:mac
 # For Linux
 $ npm run build:linux
 ```
+
+# original
+https://calculator.in.ua/seniority#google_vignette
+оригінальний калькулятор
+
