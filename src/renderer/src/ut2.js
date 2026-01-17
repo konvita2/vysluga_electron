@@ -90,6 +90,21 @@ function diffYMDInclusive_CADRE(begISO, endISO) {
     return new Date(Date.UTC(y1, m1, d1));
   };
 
+  // SPECIAL (щоб збігалося з «кадровим» онлайн-калькулятором з тестів):
+  // Якщо кінець рівно на 1 день раніше від «річниці» початку (або N-річниці),
+  // тоді показуємо рівно N років (0 міс, 0 дн).
+  // Приклад: 2024-02-03 .. 2025-02-02 => 1 рік 0 міс 0 дн (calc12).
+  {
+    const maxYears = Math.max(0, e.y - b.y + 1);
+    for (let n = 1; n <= maxYears; n++) {
+      const anniversary = addMonthsUTC(begDate, n * 12);
+      const anniversaryMinus1 = new Date(anniversary.getTime() - msPerDay);
+      if (anniversaryMinus1.getTime() === endDate.getTime()) {
+        return { y: n, m: 0, d: 0 };
+      }
+    }
+  }
+
   // 1) whole years
   let y = e.y - b.y;
   let cursor = addMonthsUTC(begDate, y * 12);

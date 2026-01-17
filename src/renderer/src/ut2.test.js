@@ -186,6 +186,63 @@ describe('math module', () => {
         expect(result.totalLengthOfService.d).toBe(1);
     })
 
+    test('calc11 year + days', () => {
+        const testInput = [
+            {
+                begDate: "2024-02-01",
+                endDate: "2025-01-31",
+                k: 1
+            },
+
+        ];
+        const result = calcMilitarySeniority_CADRE(testInput);
+        expect(result.totalSeniority.y).toBe(1);
+        expect(result.totalSeniority.m).toBe(0);
+        expect(result.totalSeniority.d).toBe(0);
+        expect(result.totalLengthOfService.y).toBe(1);
+        expect(result.totalLengthOfService.m).toBe(0);
+        expect(result.totalLengthOfService.d).toBe(0);
+    })
+
+    test('calc12 year + days', () => {
+        const testInput = [
+            {
+                begDate: "2024-02-03",
+                endDate: "2025-02-02",
+                k: 1
+            },
+
+        ];
+        const result = calcMilitarySeniority_CADRE(testInput);
+        expect(result.totalSeniority.y).toBe(1);
+        expect(result.totalSeniority.m).toBe(0);
+        expect(result.totalSeniority.d).toBe(0);
+        expect(result.totalLengthOfService.y).toBe(1);
+        expect(result.totalLengthOfService.m).toBe(0);
+        expect(result.totalLengthOfService.d).toBe(0);
+    })
+
+    test('calc13 N years minus 1 day => exactly N years (cadre calculator rule)', () => {
+        const testInput = [
+            {
+                begDate: "2020-03-10",
+                endDate: "2023-03-09", // 3-річниця мінус 1 день
+                k: 1
+            },
+        ];
+
+        const result = calcMilitarySeniority_CADRE(testInput);
+
+        expect(result.totalSeniority.y).toBe(3);
+        expect(result.totalSeniority.m).toBe(0);
+        expect(result.totalSeniority.d).toBe(0);
+
+        expect(result.totalLengthOfService.y).toBe(3);
+        expect(result.totalLengthOfService.m).toBe(0);
+        expect(result.totalLengthOfService.d).toBe(0);
+    });
+
+
     test('overlapping1 periods throws on overlapping periods (inclusive overlap)', () => {
         const input = [
             { begDate: "2025-01-01", endDate: "2025-01-10", k: 1 },
